@@ -22,16 +22,16 @@ class Stack {
     }
     
     private var currentSymbol = -1
-    {
-        didSet{
-            if currentSymbol >= 0 {
-                print("""
-                -----------------
-                \(history[0...currentSymbol])
-                """)
-            }
-        }
-    }
+//    {
+//        didSet{
+//            if currentSymbol >= 0 {
+//                print("""
+//                -----------------
+//                \(history[0...currentSymbol])
+//                """)
+//            }
+//        }
+//    }
     
     var isEmpty : Bool {
         return currentSymbol<0
