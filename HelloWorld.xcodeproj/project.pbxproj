@@ -7,14 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF1954D31F9C12A800F20678 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1954D21F9C12A800F20678 /* Model.swift */; };
+		BF7BBCE91FAD1D7100E615D7 /* cpd_script.php in Resources */ = {isa = PBXBuildFile; fileRef = BF18423C1FA69B2E005DF235 /* cpd_script.php */; };
+		BF8522981FAB504B001EEF4B /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8522971FAB504B001EEF4B /* Stack.swift */; };
 		BF8BC1411F9AC56E006F2EF5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8BC1401F9AC56E006F2EF5 /* AppDelegate.swift */; };
 		BF8BC1431F9AC56E006F2EF5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8BC1421F9AC56E006F2EF5 /* ViewController.swift */; };
-		BF8BC1461F9AC56E006F2EF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF8BC1441F9AC56E006F2EF5 /* Main.storyboard */; };
+		BF8BC1461F9AC56E006F2EF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF8BC1441F9AC56E006F2EF5 /* Main.storyboard */; settings = {ASSET_TAGS = (p, ); }; };
 		BF8BC1481F9AC56E006F2EF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF8BC1471F9AC56E006F2EF5 /* Assets.xcassets */; };
 		BF8BC14B1F9AC56E006F2EF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF8BC1491F9AC56E006F2EF5 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BF18423C1FA69B2E005DF235 /* cpd_script.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = cpd_script.php; path = "HelloWorld/Supporting Files/cpd_script.php"; sourceTree = SOURCE_ROOT; };
+		BF1954D21F9C12A800F20678 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		BF8522971FAB504B001EEF4B /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		BF8BC13D1F9AC56E006F2EF5 /* HelloWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF8BC1401F9AC56E006F2EF5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF8BC1421F9AC56E006F2EF5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -35,6 +41,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF7BBCE81FAD1B6F00E615D7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BF18423C1FA69B2E005DF235 /* cpd_script.php */,
+				BF8BC14C1F9AC56E006F2EF5 /* Info.plist */,
+				BF8BC1401F9AC56E006F2EF5 /* AppDelegate.swift */,
+				BF8BC1471F9AC56E006F2EF5 /* Assets.xcassets */,
+				BF8BC1491F9AC56E006F2EF5 /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		BF8BC1341F9AC56E006F2EF5 = {
 			isa = PBXGroup;
 			children = (
@@ -54,12 +72,11 @@
 		BF8BC13F1F9AC56E006F2EF5 /* HelloWorld */ = {
 			isa = PBXGroup;
 			children = (
-				BF8BC1401F9AC56E006F2EF5 /* AppDelegate.swift */,
 				BF8BC1421F9AC56E006F2EF5 /* ViewController.swift */,
 				BF8BC1441F9AC56E006F2EF5 /* Main.storyboard */,
-				BF8BC1471F9AC56E006F2EF5 /* Assets.xcassets */,
-				BF8BC1491F9AC56E006F2EF5 /* LaunchScreen.storyboard */,
-				BF8BC14C1F9AC56E006F2EF5 /* Info.plist */,
+				BF1954D21F9C12A800F20678 /* Model.swift */,
+				BF8522971FAB504B001EEF4B /* Stack.swift */,
+				BF7BBCE81FAD1B6F00E615D7 /* Supporting Files */,
 			);
 			path = HelloWorld;
 			sourceTree = "<group>";
@@ -90,6 +107,9 @@
 		BF8BC1351F9AC56E006F2EF5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					p,
+				);
 				LastSwiftUpdateCheck = 0900;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "ITMO University";
@@ -123,6 +143,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF7BBCE91FAD1D7100E615D7 /* cpd_script.php in Resources */,
 				BF8BC14B1F9AC56E006F2EF5 /* LaunchScreen.storyboard in Resources */,
 				BF8BC1481F9AC56E006F2EF5 /* Assets.xcassets in Resources */,
 				BF8BC1461F9AC56E006F2EF5 /* Main.storyboard in Resources */,
@@ -136,6 +157,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF8522981FAB504B001EEF4B /* Stack.swift in Sources */,
+				BF1954D31F9C12A800F20678 /* Model.swift in Sources */,
 				BF8BC1431F9AC56E006F2EF5 /* ViewController.swift in Sources */,
 				BF8BC1411F9AC56E006F2EF5 /* AppDelegate.swift in Sources */,
 			);
@@ -275,7 +298,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = HelloWorld/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/HelloWorld/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.ifmo.HelloWorld;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -289,7 +312,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = HelloWorld/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/HelloWorld/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.ifmo.HelloWorld;
 				PRODUCT_NAME = "$(TARGET_NAME)";
