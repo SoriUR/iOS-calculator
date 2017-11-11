@@ -7,4 +7,4 @@
                                      array_filter($files, function ($f) use (&$file) { return $f != $file; }))).PHP_EOL;
         }
     }
-?>
+    ?>

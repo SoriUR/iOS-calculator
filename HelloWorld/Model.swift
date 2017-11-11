@@ -4,54 +4,31 @@
 
 import Foundation
 
-private func factorial (value: Double) -> Double {
-    if value.remainder(dividingBy: 1) != 0.0 {
-        return Double.nan
-    }
-    var factorial = 1
-    for nextMultiplier in 1...Int(value) {
-        factorial *= nextMultiplier
-    }
-    return Double(factorial)
-}
-
-private func generateRandomDoubleValue () -> Double {
-    let randomUInt32 = arc4random()
-    let countOfDigitsInRandomNumber = Double(String(randomUInt32).characters.count)
-    let randomDouble = Double(randomUInt32) * pow(10, -countOfDigitsInRandomNumber)
-    return randomDouble
-}
-
 func converDoubleToString(_ value: Double) -> String {
     let formatter = NumberFormatter()
     formatter.maximumFractionDigits = 9
-    var stringFromDouble = formatter.string(from: NSNumber(value: value))!
-    if stringFromDouble.characters[stringFromDouble.startIndex]=="."{
-        stringFromDouble = "0"+stringFromDouble
-    }
+    let stringFromDouble = formatter.string(from: NSNumber(value: value))!
+//    if stringFromDouble.first == "."{
+//        stringFromDouble = "0"+stringFromDouble
+//    }
     return stringFromDouble
 }
 
 class Model {
     
     var stack: Stack
-    
-    init(stack: Stack){
-        self.stack = stack
-    }
-    
-    
     var degreesMode = true
+    private var accumulator: Double?
+    private var pendingBinaryOperation: PendingBinaryOperation?
     
-    enum OperationType {
-        case constant(Double)
-        case unaryOperation((Double)->Double)
-        case trigonometryOperation((Double)->Double)
-        case binaryOperation((Double, Double)->Double)
-        case equals
-        case random(()->Double)
+    private var resultIsPending: Bool {
+        return pendingBinaryOperation != nil
     }
-
+    
+    var result: Double? {
+        return accumulator
+    }
+    
     private var operators: [String: OperationType] = [
     //constants
         "π": OperationType.constant(Double.pi),
@@ -98,56 +75,17 @@ class Model {
         "=": OperationType.equals
     ]
     
-    func getOperationType(of operation: String) -> OperationType {
-        return operators[operation]!
+    init(stack: Stack) {
+        self.stack = stack
     }
     
-    private var accumulator: Double?
-    private var pendingBinaryOperation: PendingBinaryOperation?
-    
-    func checkAndProbablyPerformPendingOperation(){
-        if pendingBinaryOperation != nil {
-            accumulator = pendingBinaryOperation!.perform(with: accumulator!)
-        }
-    }
-    
-     func doOperation (_ symbol: String) {
-        if let operation = operators[symbol] {
-            switch operation {
-            case .constant(let value):
-                accumulator = value
-            case .trigonometryOperation(let function):
-                if accumulator != nil {
-                    checkAndProbablyPerformPendingOperation()
-                    accumulator = degreesMode ? radiansToDegree(accumulator!) : accumulator!
-                    accumulator = function(accumulator!)
-                }
-                pendingBinaryOperation=nil
-            case .unaryOperation(let function):
-                if accumulator != nil {
-                    checkAndProbablyPerformPendingOperation()
-                    accumulator = (function(accumulator!))
-                }
-                pendingBinaryOperation = nil
-            case .binaryOperation(let function):
-                if accumulator != nil {
-                    checkAndProbablyPerformPendingOperation()
-                    pendingBinaryOperation = PendingBinaryOperation(function: function, firstOperand: accumulator!)
-                    accumulator = nil
-                } else {
-                    if pendingBinaryOperation != nil {
-                    pendingBinaryOperation=PendingBinaryOperation(function: function, firstOperand: (pendingBinaryOperation!.firstOperand))
-                    }
-                }
-            case .equals:
-                if accumulator != nil && pendingBinaryOperation != nil {
-                    accumulator = pendingBinaryOperation!.perform(with: accumulator!)
-                    pendingBinaryOperation=nil
-                }
-            case .random(let function):
-                accumulator = function()
-            }
-        }
+    enum OperationType {
+        case constant(Double)
+        case unaryOperation((Double)->Double)
+        case trigonometryOperation((Double)->Double)
+        case binaryOperation((Double, Double)->Double)
+        case equals
+        case random(()->Double)
     }
     
     private struct PendingBinaryOperation {
@@ -158,23 +96,74 @@ class Model {
         }
     }
     
+     func doOperation (_ symbol: String) {
+        guard let operation = operators[symbol] else {
+            return
+        }
+        switch (operation, accumulator) {
+        case (.constant(let value), _):
+            accumulator = value
+        case (.trigonometryOperation(let function), Optional.some):
+            checkAndProbablyPerformPendingOperation()
+            accumulator = degreesMode ? radiansToDegree(accumulator!) : accumulator!
+            accumulator = function(accumulator!)
+            pendingBinaryOperation=nil
+        case (.unaryOperation(let function), Optional.some):
+            checkAndProbablyPerformPendingOperation()
+            accumulator = (function(accumulator!))
+            pendingBinaryOperation = nil
+        case (.binaryOperation(let function), Optional.some):
+            checkAndProbablyPerformPendingOperation()
+            pendingBinaryOperation = PendingBinaryOperation(function: function, firstOperand: accumulator!)
+            accumulator = nil
+            if pendingBinaryOperation != nil {
+                pendingBinaryOperation=PendingBinaryOperation(function: function, firstOperand: (pendingBinaryOperation!.firstOperand))
+            }
+        case (.equals, Optional.some):
+            if pendingBinaryOperation != nil {
+                accumulator = pendingBinaryOperation!.perform(with: accumulator!)
+                pendingBinaryOperation=nil
+            }
+        case (.random(let function), _):
+            accumulator = function()
+        default:
+            break
+        }
+    }
+    
+    func setOperand (_ operand: Double) {
+        accumulator = operand
+    }
+    
+    func getOperationType(of operation: String) -> OperationType {
+        return operators[operation]!
+    }
+    
+    func checkAndProbablyPerformPendingOperation() {
+        if let pendingBinaryOperation = pendingBinaryOperation {
+            accumulator = pendingBinaryOperation.perform(with: accumulator!)
+        }
+    }
+    
     private func radiansToDegree(_ radians: Double) -> Double {
         return radians * Double.pi / 180
     }
     
-     func setOperand (_ operand: Double) {
-        accumulator = operand
+    private class func generateRandomDoubleValue () -> Double {
+        let randomUInt32 = arc4random()
+        let countOfDigitsInRandomNumber = Double(String(randomUInt32).count)
+        let randomDouble = Double(randomUInt32) * pow(10, -countOfDigitsInRandomNumber)
+        return randomDouble
     }
     
-    private var resultIsPending: Bool {
-        get {
-            return pendingBinaryOperation != nil
+    private class func factorial (value: Double) -> Double {
+        if value.remainder(dividingBy: 1) != 0.0 {
+            return Double.nan
         }
-    }
-    
-    var result: Double? {
-        get {
-            return accumulator
+        var factorial = 1
+        for nextMultiplier in 1...Int(value) {
+            factorial *= nextMultiplier
         }
+        return Double(factorial)
     }
 }

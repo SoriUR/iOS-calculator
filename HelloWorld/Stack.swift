@@ -6,7 +6,7 @@ import Foundation
 
 class Stack {
 
-    enum Symbol{
+    enum Symbol {
         case digit(String)
         case operation(String)
     }
@@ -33,7 +33,7 @@ class Stack {
 //        }
 //    }
     
-    var isEmpty : Bool {
+    var isEmpty: Bool {
         return currentSymbol<0
     }
     
@@ -41,7 +41,7 @@ class Stack {
         return currentSymbol.distance(to: history.count) == 1
     }
     
-    func recognize (value: String) -> Symbol{
+    func recognize (value: String) -> Symbol {
         if Double(value) != nil {
             return .digit(value)
         }
@@ -57,8 +57,8 @@ class Stack {
 //        }
 //    }
     
-    func push(symbol: String){
-        if shouldWeReallyPush(value: symbol){
+    func push(symbol: String) {
+        if shouldWeReallyPush(value: symbol) {
             history.append(recognize(value: symbol))
             currentSymbol+=1
         }
@@ -75,7 +75,7 @@ class Stack {
     
     func reset() -> Bool {
         var countOfDeletedElements = 0
-        while(history.count-1>currentSymbol){
+        while(history.count-1>currentSymbol) {
             history.removeLast()
             countOfDeletedElements+=1
         }
@@ -92,7 +92,7 @@ class Stack {
         return history[currentSymbol]
     }
     
-    private func shouldWeReallyPush (value: String) -> Bool{
+    private func shouldWeReallyPush (value: String) -> Bool {
         if !isEmpty, value == getIndexValue(at: 0) { //same value
             return false
         }
@@ -105,10 +105,10 @@ class Stack {
         return true
     }
     
-    func putResultOnTop(){
+    func putResultOnTop() {
         let model = Model(stack: self)
         for symbol in history {
-            switch symbol{
+            switch symbol {
             case .digit(let value):
                 model.setOperand(Double(value)!)
             case .operation(let value):

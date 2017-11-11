@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF1433601FB74D810029359D /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = BF14335F1FB74D810029359D /* .swiftlint.yml */; };
 		BF1954D31F9C12A800F20678 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1954D21F9C12A800F20678 /* Model.swift */; };
 		BF7BBCE91FAD1D7100E615D7 /* cpd_script.php in Resources */ = {isa = PBXBuildFile; fileRef = BF18423C1FA69B2E005DF235 /* cpd_script.php */; };
 		BF8522981FAB504B001EEF4B /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8522971FAB504B001EEF4B /* Stack.swift */; };
@@ -18,12 +19,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BF18423C1FA69B2E005DF235 /* cpd_script.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = cpd_script.php; path = "HelloWorld/Supporting Files/cpd_script.php"; sourceTree = SOURCE_ROOT; };
+		BF14335F1FB74D810029359D /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
+		BF18423C1FA69B2E005DF235 /* cpd_script.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = cpd_script.php; path = HelloWorld/cpd_script.php; sourceTree = SOURCE_ROOT; };
 		BF1954D21F9C12A800F20678 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		BF8522971FAB504B001EEF4B /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		BF8BC13D1F9AC56E006F2EF5 /* HelloWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF8BC1401F9AC56E006F2EF5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BF8BC1421F9AC56E006F2EF5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BF8BC1421F9AC56E006F2EF5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = HelloWorld/ViewController.swift; sourceTree = SOURCE_ROOT; };
 		BF8BC1451F9AC56E006F2EF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BF8BC1471F9AC56E006F2EF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF8BC14A1F9AC56E006F2EF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -44,7 +46,6 @@
 		BF7BBCE81FAD1B6F00E615D7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				BF18423C1FA69B2E005DF235 /* cpd_script.php */,
 				BF8BC14C1F9AC56E006F2EF5 /* Info.plist */,
 				BF8BC1401F9AC56E006F2EF5 /* AppDelegate.swift */,
 				BF8BC1471F9AC56E006F2EF5 /* Assets.xcassets */,
@@ -57,6 +58,7 @@
 			isa = PBXGroup;
 			children = (
 				BF8BC13F1F9AC56E006F2EF5 /* HelloWorld */,
+				BF14335F1FB74D810029359D /* .swiftlint.yml */,
 				BF8BC13E1F9AC56E006F2EF5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -76,10 +78,12 @@
 				BF8BC1441F9AC56E006F2EF5 /* Main.storyboard */,
 				BF1954D21F9C12A800F20678 /* Model.swift */,
 				BF8522971FAB504B001EEF4B /* Stack.swift */,
+				BF18423C1FA69B2E005DF235 /* cpd_script.php */,
 				BF7BBCE81FAD1B6F00E615D7 /* Supporting Files */,
 			);
-			path = HelloWorld;
-			sourceTree = "<group>";
+			name = HelloWorld;
+			path = "/Users/u40/Library/Developer/Xcode/DerivedData/HelloWorld-eymplxgcfgzgtsdhzilbypjpvpuc/Build/Products/Debug-iphoneos/../../../../../../../../Desktop/HelloWorld/HelloWorld";
+			sourceTree = "<absolute>";
 		};
 /* End PBXGroup section */
 
@@ -91,6 +95,8 @@
 				BF8BC1391F9AC56E006F2EF5 /* Sources */,
 				BF8BC13A1F9AC56E006F2EF5 /* Frameworks */,
 				BF8BC13B1F9AC56E006F2EF5 /* Resources */,
+				BFC905561FB263BF004FD01C /* ShellScript */,
+				BFC905571FB266A7004FD01C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -143,6 +149,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF1433601FB74D810029359D /* .swiftlint.yml in Resources */,
 				BF7BBCE91FAD1D7100E615D7 /* cpd_script.php in Resources */,
 				BF8BC14B1F9AC56E006F2EF5 /* LaunchScreen.storyboard in Resources */,
 				BF8BC1481F9AC56E006F2EF5 /* Assets.xcassets in Resources */,
@@ -151,6 +158,35 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BFC905561FB263BF004FD01C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		BFC905571FB266A7004FD01C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Running CPD\npmd cpd --files HelloWorld --minimum-tokens 50 --language swift --encoding UTF-8 --format net.sourceforge.pmd.cpd.XMLRenderer > cpd-output.xml --failOnViolation true\n# Running script\nphp HelloWorld/cpd_script.php -cpd-xml cpd-output.xml";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BF8BC1391F9AC56E006F2EF5 /* Sources */ = {

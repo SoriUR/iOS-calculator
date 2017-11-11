@@ -7,42 +7,49 @@ import UIKit
 class ViewController: UIViewController {
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         addButtonsToArray(for: view)
         roundUpTheButtons()
-        
     }
   
     @IBOutlet weak var equalsButton: UIButton!
-    @IBOutlet weak var display: UILabel!
+    @IBOutlet weak var display: UILabel! {
+        didSet {
+            displayText = display.text ?? ""
+        }
+    }
     @IBOutlet weak var radiansStateLabel: UILabel!
     
-    var lastPressedOperand: UIButton?
+    weak var lastPressedOperand: UIButton?
     var inTheMiddleOftyping = false
-    var radianMode = false
-   
     var buttonsArray: [UIButton] = []
-    
     var stack  = Stack()
     lazy var model = Model.init(stack: stack) //didnt need it eventually, but did i use "lazy" right?
     
+    var displayText = "0" {
+        didSet {
+            display.text = displayText
+        }
+    }
+    
     var symbol: Double {
         get {
-            stack.push(symbol: display.text!)
-            return Double(display.text!)!
+            stack.push(symbol: displayText)
+            return Double(displayText)! //dont really know what to do with !
         }
         set {
-            let stringFromDouble = converDoubleToString(newValue)
-            display.text = stringFromDouble
+            let doubleValue = converDoubleToString(newValue)
+            display.text = doubleValue
             
             if stack.isEmpty {
-                stack.push(symbol: stringFromDouble)
-            } else if stack.getIndexValue(at:  0) != stringFromDouble{
-                stack.push(symbol: stringFromDouble)
+                stack.push(symbol: doubleValue)
+            } else if stack.getIndexValue(at: 0) != doubleValue {
+                stack.push(symbol: doubleValue)
             }
         }
     }
     
-    let titlesForButtonsWithTwoStates: [(firstState: String,secondState: String)] = [
+    let titlesForButtonsWithTwoStates: [(firstState: String, secondState: String)] = [
         ("log₁₀", "log₂"),
         ("ln", "logᵧ"),
         ("10ˣ", "2ˣ"),
@@ -72,8 +79,9 @@ class ViewController: UIViewController {
     }
     
     func roundUpTheButtons() {
+        let multiplayer: CGFloat = traitCollection.horizontalSizeClass == .compact ? 0.7 : 0.9
         for button in buttonsArray {
-            button.layer.cornerRadius = min(button.layer.bounds.size.height,button.layer.bounds.size.width) * (traitCollection.horizontalSizeClass == .compact ? 0.7 : 0.9)
+            button.layer.cornerRadius = min(button.bounds.size.height, button.bounds.size.width) * multiplayer
             button.layer.masksToBounds = true
         }
     }
@@ -90,7 +98,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func changeSelectionOfOperationButton(with title: String,in view: UIView) {
+    func changeSelectionOfOperationButton(with title: String, in view: UIView) {
         for button in buttonsArray {
             if button.currentTitle! == title {
                 button.isSelected = !button.isSelected
@@ -110,60 +118,58 @@ class ViewController: UIViewController {
     }
     
     func performClickAnimation(for title: String) {
-        for button in buttonsArray {
-            if button.currentTitle! == title {
+        if let button = buttonsArray.first(where: {$0.currentTitle==title}) {
             UIView.transition(with: button,
-                          duration: 0.2,
-                          options: .transitionCrossDissolve,
-                          animations: { button.isHighlighted = true },
-                          completion: { if $0 { button.isHighlighted = false }})
-            }
+                              duration: 0.2,
+                              options: .transitionCrossDissolve,
+                              animations: { button.isHighlighted = true },
+                              completion: { if $0 { button.isHighlighted = false }})
         }
     }
     
     @IBAction func undo(_ sender: UIButton) {
         if !stack.isEmpty {
             let symbol = stack.pop()
-            switch symbol{
-            case .digit(_):
+            switch symbol {
+            case .digit:
                 if stack.isEmpty {
-                    display.text = "0"
+                    displayText = "0"
                     return
                 }
                 let prevOperationTitle = stack.getIndexValue(at: 0)
                 if Double(prevOperationTitle) != nil { //another digit
-                    display.text = prevOperationTitle
+                    displayText = prevOperationTitle
                     return
                 }
                 //operation
                 let prevOperationType = model.getOperationType(of: prevOperationTitle)
                 switch prevOperationType {
-                case .equals,.unaryOperation(_),.trigonometryOperation(_): //display prev digit
-                    display.text = stack.getIndexValue(at:1)
+                case .equals, .unaryOperation, .trigonometryOperation: //display prev digit
+                    displayText = stack.getIndexValue(at: 1)
                     _ = stack.pop()
-                case .binaryOperation(_): //select operation button
-                    changeSelectionOfOperationButton(with: prevOperationTitle,in: view)
+                case .binaryOperation: //select operation button
+                    changeSelectionOfOperationButton(with: prevOperationTitle, in: view)
                     fallthrough
                 default: // display prev operation
-                    display.text = stack.getIndexValue(at:1)
+                    displayText = stack.getIndexValue(at: 1)
                     break
                 }
             case .operation(let operandTitle): //select operation button and display prev digit
                 changeSelectionOfOperationButton(with: operandTitle, in: view)
-                display.text = stack.getIndexValue(at:0)
+                displayText = stack.getIndexValue(at: 0)
             }
         }
     }
     
     @IBAction func redo(_ sender: UIButton) {
         let stackWasEmpty = stack.isEmpty
-        if !stack.isFull{
+        if !stack.isFull {
             let symbol = stack.goForward()
             switch symbol {
             case .digit(let value): //dispaly digit's value, probably select prev opearation button
-                display.text = value
-                if !stackWasEmpty{
-                    let prevOperandTitle = stack.getIndexValue(at:1)
+                displayText = value
+                if !stackWasEmpty {
+                    let prevOperandTitle = stack.getIndexValue(at: 1)
                     changeSelectionOfOperationButton(with: prevOperandTitle, in: view)
                     performClickAnimation(for: value)
                 }
@@ -171,7 +177,7 @@ class ViewController: UIViewController {
                 changeSelectionOfOperationButton(with: title, in: view)
                 let operationType = model.getOperationType(of: stack.getIndexValue(at: 0))
                 switch operationType {
-                case .equals,.unaryOperation(_),.trigonometryOperation(_): // if its not binary operation, display operation result, and push opertion
+                case .equals, .unaryOperation, .trigonometryOperation: // if not binary binary operation, display operation result, and push operation
                     _ = stack.goForward()
                     self.symbol = Double(stack.getIndexValue(at: 0))!
                     performClickAnimation(for: title)
@@ -186,22 +192,24 @@ class ViewController: UIViewController {
         stack = Stack()
         model = Model.init(stack: stack)
         inTheMiddleOftyping = false
-        display.text = "0"
+        displayText = "0"
         resetSelectionForAllButtons()
     }
     
     @IBAction func pressDigit(_ sender: UIButton) {
         resetSelectionForAllButtons()
-        let digit = sender.currentTitle!
-        if inTheMiddleOftyping {
-            let currentlyAtScreen = display.text!
-            if Double(currentlyAtScreen+digit) != nil {
-                display.text = currentlyAtScreen+digit
+        if let digit = sender.currentTitle {
+            if inTheMiddleOftyping {
+                displayText += digit
+                if displayText[displayText.startIndex] == "0" &&
+                   displayText[displayText.index(after: displayText.startIndex)] != "." {
+                    displayText.remove(at: displayText.startIndex)
+                }
+            } else {
+                displayText = digit == "." ? "0." : digit
             }
-        } else {
-            display.text! = digit == "." ? "0." : digit
+            inTheMiddleOftyping = true
         }
-        inTheMiddleOftyping = true
     }
     
     @IBAction func performOperation (_ sender: UIButton) {
